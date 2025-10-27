@@ -1,79 +1,30 @@
-# minha_api/views.py
-
-from rest_framework import generics
-# Importa os seus modelos de banco de dados
+from rest_framework import viewsets
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Empresa, Pessoa, Usuario
-# Importa os seus Serializers
 from .serializers import EmpresaSerializer, PessoaSerializer, UsuarioSerializer
+from .filters import EmpresaFilter, PessoaFilter, UsuarioFilter 
 
-# 1. Views para o modelo Empresa (Company)
-
-class EmpresaListCreate(generics.ListCreateAPIView):
-    """
-    Endpoint: /empresas/
-    Métodos:
-    - GET: Lista todas as empresas.
-    - POST: Cria uma nova empresa.
-    """
+class EmpresaViewSet(viewsets.ModelViewSet):
+    
     queryset = Empresa.objects.all()
     serializer_class = EmpresaSerializer
-
-class EmpresaRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-    """
-    Endpoint: /empresas/<pk>/
-    Métodos:
-    - GET: Recupera os detalhes de uma empresa específica.
-    - PUT/PATCH: Atualiza uma empresa específica.
-    - DELETE: Deleta uma empresa específica.
-    """
-    queryset = Empresa.objects.all()
-    serializer_class = EmpresaSerializer
-
-
-# 2. Views para o modelo Pessoa (Person)
-
-class PessoaListCreate(generics.ListCreateAPIView):
-    """
-    Endpoint: /pessoas/
-    Métodos:
-    - GET: Lista todas as pessoas.
-    - POST: Cria uma nova pessoa.
-    """
+       
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = EmpresaFilter
+    
+class PessoaViewSet(viewsets.ModelViewSet):
+    
     queryset = Pessoa.objects.all()
     serializer_class = PessoaSerializer
+    
+ 
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = PessoaFilter
 
-class PessoaRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-    """
-    Endpoint: /pessoas/<pk>/
-    Métodos:
-    - GET: Recupera os detalhes de uma pessoa específica.
-    - PUT/PATCH: Atualiza uma pessoa específica.
-    - DELETE: Deleta uma pessoa específica.
-    """
-    queryset = Pessoa.objects.all()
-    serializer_class = PessoaSerializer
-
-
-
-# 3. Views para o modelo Usuario (User)
-
-class UsuarioListCreate(generics.ListCreateAPIView):
-    """
-    Endpoint: /usuarios/
-    Métodos:
-    - GET: Lista todos os usuários.
-    - POST: Cria um novo usuário.
-    """
+class UsuarioViewSet(viewsets.ModelViewSet):
+    
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
-
-class UsuarioRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-    """
-    Endpoint: /usuarios/<pk>/
-    Métodos:
-    - GET: Recupera os detalhes de um usuário específico.
-    - PUT/PATCH: Atualiza um usuário específico.
-    - DELETE: Deleta um usuário específico.
-    """
-    queryset = Usuario.objects.all()
-    serializer_class = UsuarioSerializer
+   
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = UsuarioFilter
